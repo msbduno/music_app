@@ -12,6 +12,8 @@ class LinksScreen extends StatelessWidget {
         slivers: <Widget>[
           CupertinoSliverNavigationBar(
             largeTitle: Text(musicName),
+            // add text to the back button
+            previousPageTitle: 'Back',
           ),
           SliverFillRemaining(
             child: Center(

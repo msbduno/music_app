@@ -9,13 +9,26 @@ class NavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
-        items: const <BottomNavigationBarItem>[
+        backgroundColor: CupertinoColors.systemBackground,
+        activeColor: CupertinoColors.activeBlue,
+        inactiveColor: CupertinoColors.systemGrey,
+        iconSize: 27, // Taille des icônes
+        height: 60, // Hauteur des éléments
+
+
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.home),
+            icon: Padding(
+              padding: EdgeInsets.only(top: 5.0),
+              child: Icon(CupertinoIcons.house_fill),
+            ),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.search),
+            icon: Padding(
+              padding: EdgeInsets.only(top: 5.0),
+              child: Icon(CupertinoIcons.search),
+            ),
             label: 'Search',
           ),
         ],

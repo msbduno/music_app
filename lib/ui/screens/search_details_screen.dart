@@ -21,10 +21,11 @@ class SearchDetailsScreen extends StatelessWidget {
         slivers: <Widget>[
           CupertinoSliverNavigationBar(
             largeTitle: Text(query),
+            automaticallyImplyLeading: false,
+
           ),
-          // add space between the navigation bar and the list
           const SliverToBoxAdapter(
-            child: SizedBox(height: 16),
+            child: SizedBox(height: 6),
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
@@ -33,9 +34,9 @@ class SearchDetailsScreen extends StatelessWidget {
                 return CupertinoListTile(
                   title: Text(music),
                   trailing: const Icon(
-  CupertinoIcons.link_circle,
-  color: CupertinoColors.systemGrey,
-),
+                    CupertinoIcons.link_circle,
+                    color: CupertinoColors.systemGrey,
+                  ),
                   onTap: () {
                     Navigator.of(context).push(
                       CupertinoPageRoute(

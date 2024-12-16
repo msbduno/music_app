@@ -114,9 +114,41 @@ class _SearchScreenState extends State<SearchScreen> {
           child: ListTile(
             title: Text(result.concatenatedTitle),
             subtitle: Text(result.genre.join(', ')),
+        return GestureDetector(
+          onTap: () {
+            _searchController.text = filteredHistory[index];
+            _navigateToSearchResults(filteredHistory[index]);
+          },
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: CupertinoColors.systemGrey4,
+                  width: 0.5,
+                ),
+              ),
+            ),
+            child: Row(
+              children: [
+                const Icon(
+                  CupertinoIcons.clock,
+                  color: CupertinoColors.systemGrey,
+                ),
+                const SizedBox(width: 10),
+                Text(
+                  filteredHistory[index],
+                  style: const TextStyle(
+                    color: CupertinoColors.black,
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },
     );
   }
+
 }
+
