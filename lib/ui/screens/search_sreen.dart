@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:music_app/ui/screens/search_details_screen.dart';
 
+import '../../models/discogs_result.dart';
+import '../../repositories/discogs_repository.dart';
+
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
 
@@ -19,8 +22,10 @@ class _SearchScreenState extends State<SearchScreen> {
     'Ed Sheeran',
     'Billie Eilish'
   ];
-
+  final DiscogsRepository _repository = DiscogsRepository();
   bool _isSearching = false;
+  bool _isLoading = false;
+  List<DiscogsResult> _searchResults = [];
 
   @override
   void initState() {
@@ -32,8 +37,11 @@ class _SearchScreenState extends State<SearchScreen> {
     });
   }
 
-  void _navigateToSearchResults(String query) {
+  void _navigateToSearchResults(String query) async {
     if (query.isNotEmpty) {
+      setState(() {
+        _isLoading = true;
+      });
       if (!_searchHistory.contains(query)) {
         setState(() {
           _searchHistory.insert(0, query);
@@ -42,11 +50,11 @@ class _SearchScreenState extends State<SearchScreen> {
           }
         });
       }
-      Navigator.of(context).push(
-        CupertinoPageRoute(
-          builder: (context) => SearchDetailsScreen(query: query),
-        ),
-      );
+      final results = await _repository.fetchArtistData(query);
+      setState(() {
+        _searchResults = results;
+        _isLoading = false;
+      });
     }
   }
 
@@ -77,9 +85,13 @@ class _SearchScreenState extends State<SearchScreen> {
                 },
               ),
             ),
-            if (_searchController.text.isNotEmpty)
+            if (_isLoading)
+              const Center(
+                child: CircularProgressIndicator(),
+              )
+            else if (_searchController.text.isNotEmpty)
               Expanded(
-                child: _buildSearchHistory(),
+                child: _buildSearchResults(),
               ),
           ],
         ),
@@ -87,51 +99,24 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-  Widget _buildSearchHistory() {
-    final filteredHistory = _searchHistory
-        .where((item) =>
-        item.toLowerCase().contains(_searchController.text.toLowerCase()))
-        .toList();
+  Widget _buildSearchResults() {
+    if (_searchResults.isEmpty) {
+      return Center(
+        child: Text('No results found'),
+      );
+    }
 
     return ListView.builder(
-      itemCount: filteredHistory.length,
+      itemCount: _searchResults.length,
       itemBuilder: (context, index) {
-        return GestureDetector(
-          onTap: () {
-            // Remplir le champ de recherche et naviguer
-            _searchController.text = filteredHistory[index];
-            _navigateToSearchResults(filteredHistory[index]);
-          },
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                  color: CupertinoColors.systemGrey4,
-                  width: 0.5,
-                ),
-              ),
-            ),
-            child: Row(
-              children: [
-                const Icon(
-                  CupertinoIcons.clock,
-                  color: CupertinoColors.systemGrey,
-                ),
-                const SizedBox(width: 10),
-                Text(
-                  filteredHistory[index],
-                  style: const TextStyle(
-                    color: CupertinoColors.black,
-                  ),
-                ),
-              ],
-            ),
+        final result = _searchResults[index];
+        return Material(
+          child: ListTile(
+            title: Text(result.concatenatedTitle),
+            subtitle: Text(result.genre.join(', ')),
           ),
         );
       },
     );
   }
-
 }
-
