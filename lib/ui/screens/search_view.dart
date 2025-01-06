@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:music_app/blocs/discogs_search_cubit.dart';
 import 'package:music_app/repositories/discogs_repository.dart';
+import 'package:music_app/ui/screens/search_details_screen.dart';
 import '../../states/discogs_search_state.dart';
 
 class SearchUi extends StatelessWidget {
@@ -49,11 +50,12 @@ class SearchView extends StatelessWidget {
                           title: Text(result.concatenatedTitle),
                           subtitle: Text(result.genre.join(', ')),
                           onTap: () {
-  Navigator.of(context).pushNamed(
-    '/search_details',
-    arguments: result,
-  );
-},
+                            Navigator.of(context).push(
+                              CupertinoPageRoute(
+                                builder: (context) => SearchDetailsScreen(artist: result),
+                              ),
+                            );
+                          },
                         );
                       },
                     ),
