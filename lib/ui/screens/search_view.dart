@@ -47,7 +47,29 @@ class SearchView extends StatelessWidget {
                       itemBuilder: (context, index) {
                         final result = state.results[index];
                         return CupertinoListTile(
-                          title: Text(result.title),
+                          title: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                            children: [
+                              if (result.coverImage != null)
+                                ClipOval(
+                                child: Image.network(
+                                  result.coverImage!,
+                                  width: 50,
+                                  height: 50,
+                                  fit: BoxFit.cover,
+                                  ),
+                                )
+                              else
+                                const Icon(
+                                  CupertinoIcons.person,
+                                  size: 50,
+                                ),
+                              const SizedBox(width: 10),
+                              Text(result.title),
+                            ],
+                          ),
+                          ),
                           //subtitle: Text(result.genre.join(', ')),
                           onTap: () {
                             Navigator.of(context).push(
