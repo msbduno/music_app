@@ -36,10 +36,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           routes: {
             '/search': (context) => const SearchUi(),
-            '/search_details': (context) {
-              final DiscogsResult artist = ModalRoute.of(context)!.settings.arguments as DiscogsResult;
-              return SearchDetailsScreen(artist: artist);
-            }, },
+          }
         ),
       ),
     );
