@@ -1,7 +1,5 @@
-import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:music_app/ui/screens/links_screen.dart';
 import '../../models/discogs_result.dart';
 import '../../repositories/discogs_repository.dart';

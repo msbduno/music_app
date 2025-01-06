@@ -8,12 +8,12 @@ class SearchHistoryWidget extends StatelessWidget {
   final Function(String) deleteFromHistory;
 
   const SearchHistoryWidget({
-    Key? key,
+    super.key,
     required this.filteredHistory,
     required this.searchController,
     required this.navigateToSearchResults,
     required this.deleteFromHistory,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

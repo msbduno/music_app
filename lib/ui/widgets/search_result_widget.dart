@@ -7,9 +7,9 @@ class SearchResultsWidget extends StatelessWidget {
   final List<DiscogsResult> searchResults;
 
   const SearchResultsWidget({
-    Key? key,
+    super.key,
     required this.searchResults,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

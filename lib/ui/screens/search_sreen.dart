@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import '../../models/discogs_result.dart';
 import '../../repositories/discogs_repository.dart';
 import '../widgets/history_widget.dart';

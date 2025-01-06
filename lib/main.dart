@@ -17,19 +17,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SpotifyRepository spotifyRepository = SpotifyRepository();
-
-    return MultiRepositoryProvider(
-      providers: [
-        RepositoryProvider.value(value: spotifyRepository),
-      ],
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (context) => SearchCubit(spotifyRepository),
-          ),
-        ],
-        child: CupertinoApp(
+    return CupertinoApp(
           home: const NavigationBar(),
           debugShowCheckedModeBanner: false,
           routes: {
@@ -38,8 +26,7 @@ class MyApp extends StatelessWidget {
               final artist = ModalRoute.of(context)!.settings.arguments as DiscogsResult;
               return SearchDetailsScreen(artist: artist);
             }, },
-        ),
-      ),
-    );
+      );
+
   }
 }
