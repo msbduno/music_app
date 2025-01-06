@@ -9,7 +9,7 @@ class DiscogsRepository {
 
   Future<List<DiscogsResult>> fetchArtistData(String artistName) async {
     print('Fetching artist data for: $artistName');
-    final response = await http.get(Uri.parse('$_baseSearchUrl?artist=$artistName&token=$_token'));
+    final response = await http.get(Uri.parse('$_baseSearchUrl?q=$artistName&type=artist&token=$_token'));
 
     if (response.statusCode == 200) {
       final List<dynamic> resultsJson = json.decode(response.body)['results'];

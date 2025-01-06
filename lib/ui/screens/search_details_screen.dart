@@ -54,18 +54,10 @@ class _SearchDetailsScreenState extends State<SearchDetailsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.artist.concatenatedTitle,
+                      widget.artist.title,
                       style: CupertinoTheme.of(context).textTheme.navTitleTextStyle.copyWith(
                         fontSize: 30,
                         fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    Text(
-                      '${widget.artist.genre.join(', ')} • ${widget.artist.style.join(', ')}',
-                      style: CupertinoTheme.of(context).textTheme.navTitleTextStyle.copyWith(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: CupertinoColors.systemGrey,
                       ),
                     ),
                   ],

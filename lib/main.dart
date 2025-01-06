@@ -24,8 +24,6 @@ class MyApp extends StatelessWidget {
           routes: {
             '/search': (context) => const SearchUi(),
           }
-        ),
-      ),
-    );
+        );
   }
 }

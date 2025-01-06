@@ -27,8 +27,7 @@ class SearchResultsWidget extends StatelessWidget {
       itemBuilder: (context, index) {
         final result = searchResults[index];
         return CupertinoListTile(
-          title: Text(result.concatenatedTitle),
-          subtitle: Text(result.genre.join(', ')),
+          title: Text(result.title),
           onTap: () {
             Navigator.of(context).push(
               CupertinoPageRoute(
