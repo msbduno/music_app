@@ -2,57 +2,60 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:music_app/models/discogs_result.dart';
 
+import '../models/discogs_artist_releases.dart';
+
 class DiscogsRepository {
   final String _baseSearchUrl = 'https://api.discogs.com/database/search';
   final String _baseArtistUrl = 'https://api.discogs.com/artists';
   final String _token = 'txaGrjCJfcRnduXfGTWIDKuqDroIIKeeyIrPerzn';
 
-  Future<List<DiscogsResult>> fetchArtistData(String artistName) async {
-    print('Fetching artist data for: $artistName');
+  Future<List<DiscogsReleases>> fetchArtistData(String artistName) async {
     final response = await http.get(Uri.parse('$_baseSearchUrl?q=$artistName&type=artist&token=$_token'));
 
     if (response.statusCode == 200) {
       final List<dynamic> resultsJson = json.decode(response.body)['results'];
-      print('Initial search results: ${resultsJson.length} items found');
 
       final Set<String> uniqueTitles = {};
-      final List<DiscogsResult> uniqueResults = [];
+      final List<DiscogsReleases> uniqueResults = [];
 
       for (var result in resultsJson) {
-        final concatenatedTitle = result['title'].split(' - ')[0];
-        if (uniqueTitles.add(concatenatedTitle)) {
-          uniqueResults.add(DiscogsResult.fromJson(result));
+        if (uniqueTitles.add(result['title'])) {
+          uniqueResults.add(DiscogsReleases.fromJson(result));
         }
       }
 
-      print('Total unique results found: ${uniqueResults.length}');
       return uniqueResults;
     } else {
-      print('Failed to fetch initial search results');
       throw Exception('Failed to load artist data');
     }
   }
 
-  Future<List> fetchArtistReleases(int artistId) async {
-    print('Fetching releases for artist ID: $artistId');
-    final response = await http.get(
-        Uri.parse('$_baseArtistUrl/$artistId/releases?token=$_token')
-    );
+  Future<List<DiscogsArtistReleases>> fetchArtistReleases(int artistId) async {
+    List<DiscogsArtistReleases> allReleases = [];
+    int currentPage = 1;
+    int totalPages = 1;
 
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> responseBody = json.decode(response.body);
-      final List<dynamic> releases = responseBody['releases'];
+    do {
+      final response = await http.get(
+          Uri.parse('$_baseArtistUrl/$artistId/releases?token=$_token&page=$currentPage')
+      );
 
-      // Extraire les titres des releases
-      final List releaseTitles = releases.map((release) {
-        return release['title'] ?? 'Unknown Release';
-      }).toList();
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseBody = json.decode(response.body);
+        final List<dynamic> releasesJson = responseBody['releases'];
+        totalPages = responseBody['pagination']['pages'];
 
-      print('Found ${releaseTitles.length} releases');
-      return releaseTitles;
-    } else {
-      print('Failed to fetch artist releases');
-      throw Exception('Failed to load artist releases');
-    }
+        for (var releaseJson in releasesJson) {
+          print(releaseJson);
+          allReleases.add(DiscogsArtistReleases.fromJson(releaseJson));
+        }
+
+        currentPage++;
+      } else {
+        throw Exception('Failed to load artist releases');
+      }
+    } while (currentPage <= totalPages);
+
+    return allReleases;
   }
 }

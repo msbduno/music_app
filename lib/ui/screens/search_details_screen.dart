@@ -5,7 +5,7 @@ import '../../models/discogs_result.dart';
 import '../../repositories/discogs_repository.dart';
 
 class SearchDetailsScreen extends StatefulWidget {
-  final DiscogsResult artist;
+  final DiscogsReleases artist;
 
   const SearchDetailsScreen({super.key, required this.artist});
 
@@ -85,7 +85,7 @@ class _SearchDetailsScreenState extends State<SearchDetailsScreen> {
                 (context, index) {
                   final music = _musicList[index];
                   return CupertinoListTile(
-                    title: Text(music),
+                    title: Text(music.title),
                     trailing: const Icon(
                       CupertinoIcons.link_circle,
                       color: CupertinoColors.systemGrey,
@@ -93,7 +93,7 @@ class _SearchDetailsScreenState extends State<SearchDetailsScreen> {
                     onTap: () {
                       Navigator.of(context).push(
                         CupertinoPageRoute(
-                          builder: (context) => LinksScreen(musicName: music),
+                          builder: (context) => LinksScreen(musicName: music.title),
                         ),
                       );
                     },

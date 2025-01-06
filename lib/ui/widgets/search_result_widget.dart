@@ -4,7 +4,7 @@ import 'package:music_app/models/discogs_result.dart';
 import 'package:music_app/ui/screens/search_details_screen.dart';
 
 class SearchResultsWidget extends StatelessWidget {
-  final List<DiscogsResult> searchResults;
+  final List<DiscogsReleases> searchResults;
 
   const SearchResultsWidget({
     super.key,
