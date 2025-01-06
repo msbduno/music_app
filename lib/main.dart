@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:music_app/blocs/search_cubit.dart';
 import 'package:music_app/repositories/spotify_repository.dart';
 import 'package:music_app/ui/screens/search_details_screen.dart';
-import 'package:music_app/ui/screens/search_sreen.dart';
+import 'package:music_app/ui/screens/search_view.dart';
 import 'package:music_app/ui/widgets/navigationbar_widget.dart';
 
 import 'core/theme.dart';
@@ -35,9 +35,9 @@ class MyApp extends StatelessWidget {
           home: const NavigationBar(),
           debugShowCheckedModeBanner: false,
           routes: {
-            '/search': (context) => const SearchScreen(),
+            '/search': (context) => const SearchUi(),
             '/search_details': (context) {
-              final artist = ModalRoute.of(context)!.settings.arguments as DiscogsResult;
+              final DiscogsResult artist = ModalRoute.of(context)!.settings.arguments as DiscogsResult;
               return SearchDetailsScreen(artist: artist);
             }, },
         ),
