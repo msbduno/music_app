@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:music_app/ui/screens/home_screen.dart';
-import 'package:music_app/ui/screens/search_sreen.dart';
+import 'package:music_app/ui/screens/search_view.dart';
 
 class NavigationBar extends StatelessWidget {
   const NavigationBar({super.key});
@@ -10,7 +10,6 @@ class NavigationBar extends StatelessWidget {
     return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
         backgroundColor: CupertinoColors.systemBackground,
-        activeColor: CupertinoColors.activeBlue,
         inactiveColor: CupertinoColors.systemGrey,
         iconSize: 27, // Taille des icônes
         height: 60, // Hauteur des éléments
@@ -41,7 +40,7 @@ class NavigationBar extends StatelessWidget {
             );
           case 1:
             return CupertinoTabView(
-              builder: (BuildContext context) => SearchScreen(),
+              builder: (BuildContext context) => SearchUi(),
             );
           default:
             return CupertinoTabView(

@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 import '../../models/discogs_result.dart';
 import '../../repositories/discogs_repository.dart';
@@ -78,7 +79,6 @@ class _SearchScreenState extends State<SearchScreen> {
       }
     }
   }
-
   List<String> get filteredHistory {
     return _searchHistory
         .where((history) => history.toLowerCase().contains(_searchController.text.toLowerCase()))

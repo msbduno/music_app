@@ -10,4 +10,5 @@ class DiscogsSearchState {
     this.error,
     this.isLoading = false,
   });
+
 }
