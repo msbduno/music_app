@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:music_app/models/discogs_result.dart';
+import 'package:music_app/models/discogs_releases.dart';
+import 'package:music_app/models/discogs_videos.dart';
 
 import '../models/discogs_artist_releases.dart';
 
@@ -46,7 +47,6 @@ class DiscogsRepository {
         totalPages = responseBody['pagination']['pages'];
 
         for (var releaseJson in releasesJson) {
-          print(releaseJson);
           allReleases.add(DiscogsArtistReleases.fromJson(releaseJson));
         }
 
@@ -58,4 +58,28 @@ class DiscogsRepository {
 
     return allReleases;
   }
+
+  Future<Map<String, List<DiscogsVideos>>> fetchReleaseVideos(int releaseId) async {
+  final response = await http.get(
+    Uri.parse('https://api.discogs.com/masters/$releaseId')
+  );
+
+  if (response.statusCode == 200) {
+    final Map<String, dynamic> responseBody = json.decode(response.body);
+    final List<dynamic> videosJson = responseBody['videos'];
+    final List<dynamic> tracklistJson = responseBody['tracklist'];
+
+    List<DiscogsVideos> allVideos = videosJson.map((video) => DiscogsVideos.fromJson(video)).toList();
+    Map<String, List<DiscogsVideos>> tracklistVideos = {};
+
+    for (var track in tracklistJson) {
+      String trackTitle = track['title'];
+      tracklistVideos[trackTitle] = allVideos.where((video) => video.title.contains(trackTitle)).toList();
+    }
+
+    return tracklistVideos;
+  } else {
+    throw Exception('Failed to load release videos');
+  }
+}
 }

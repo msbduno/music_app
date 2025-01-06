@@ -7,7 +7,7 @@ import 'package:music_app/ui/screens/search_view.dart';
 import 'package:music_app/ui/widgets/navigationbar_widget.dart';
 
 import 'core/theme.dart';
-import 'models/discogs_result.dart';
+import 'models/discogs_releases.dart';
 
 void main() {
   runApp(const MyApp());

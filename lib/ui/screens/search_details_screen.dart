@@ -1,7 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:music_app/ui/screens/links_screen.dart';
-import '../../models/discogs_result.dart';
+import '../../models/discogs_releases.dart';
 import '../../repositories/discogs_repository.dart';
 
 class SearchDetailsScreen extends StatefulWidget {
