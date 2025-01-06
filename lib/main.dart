@@ -6,6 +6,7 @@ import 'package:music_app/ui/screens/search_details_screen.dart';
 import 'package:music_app/ui/screens/search_sreen.dart';
 import 'package:music_app/ui/widgets/navigationbar_widget.dart';
 
+import 'core/theme.dart';
 import 'models/discogs_result.dart';
 
 void main() {
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
           ),
         ],
         child: CupertinoApp(
+          theme: AppTheme.getLightTheme(),
           home: const NavigationBar(),
           debugShowCheckedModeBanner: false,
           routes: {

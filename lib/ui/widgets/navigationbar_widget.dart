@@ -10,7 +10,6 @@ class NavigationBar extends StatelessWidget {
     return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
         backgroundColor: CupertinoColors.systemBackground,
-        activeColor: CupertinoColors.activeBlue,
         inactiveColor: CupertinoColors.systemGrey,
         iconSize: 27, // Taille des icônes
         height: 60, // Hauteur des éléments
