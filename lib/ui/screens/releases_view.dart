@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:music_app/repositories/discogs_repository.dart';
 import '../../blocs/discogs_artist_cubit.dart';
+import '../../models/discogs_releases.dart';
 import '../../states/discogs_artist_state.dart';
-import '../../models/discogs_result.dart';
 import 'links_screen.dart';
 
 class ReleasesUi extends StatelessWidget {

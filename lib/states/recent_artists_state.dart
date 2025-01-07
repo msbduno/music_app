@@ -1,4 +1,4 @@
-import '../models/discogs_result.dart';
+import '../models/discogs_releases.dart';
 
 class RecentArtistsState {
   final List<DiscogsReleases> artists;

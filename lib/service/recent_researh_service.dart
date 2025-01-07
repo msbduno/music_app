@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../models/discogs_result.dart';
 import '../blocs/discogs_search_cubit.dart';
+import '../models/discogs_releases.dart';
 
 class RecentSearchesService {
   static const String _prefsKey = 'recent_searches';
