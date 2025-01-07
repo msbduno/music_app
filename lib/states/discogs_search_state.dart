@@ -1,4 +1,4 @@
-import 'package:music_app/models/discogs_result.dart';
+import 'package:music_app/models/discogs_releases.dart';
 
 class DiscogsSearchState {
   final List<DiscogsReleases> results;
