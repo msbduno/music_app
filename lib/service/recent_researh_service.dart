@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../blocs/discogs_search_cubit.dart';
 import '../models/discogs_releases.dart';
+import '../blocs/discogs_search_cubit.dart';
 
 class RecentSearchesService {
   static const String _prefsKey = 'recent_searches';
@@ -20,15 +20,17 @@ class RecentSearchesService {
 
   Future<void> addSearch(String artistName) async {
     List<String> searches = getRecentSearches();
-    // Remove if already exists
     searches.remove(artistName);
-    // Add at the beginning
     searches.insert(0, artistName);
-    // Keep only max items
     if (searches.length > _maxItems) {
       searches = searches.sublist(0, _maxItems);
     }
+    await _prefs.setString(_prefsKey, jsonEncode(searches));
+  }
 
+  Future<void> removeSearch(String artistName) async {
+    List<String> searches = getRecentSearches();
+    searches.remove(artistName);
     await _prefs.setString(_prefsKey, jsonEncode(searches));
   }
 
@@ -49,9 +51,5 @@ class RecentSearchesService {
     }
 
     return results;
-  }
-
-  Future<void> clearSearches() async {
-    await _prefs.remove(_prefsKey);
   }
 }

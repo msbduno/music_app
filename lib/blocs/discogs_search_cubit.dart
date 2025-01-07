@@ -19,4 +19,8 @@ class DiscogsSearchCubit extends Cubit<DiscogsSearchState> {
       }
     }
   }
+
+  void clearSearchResults() {
+    emit(DiscogsSearchState(results: [], error: null));
+  }
 }

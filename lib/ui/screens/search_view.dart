@@ -37,12 +37,24 @@ class SearchView extends StatelessWidget {
       ),
       child: SafeArea(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            CupertinoSearchTextField(
-              onSubmitted: (value) {
-                context.read<DiscogsSearchCubit>().searchArtists(value);
-              },
-            ),
+            Padding(
+  padding: const EdgeInsets.all(16.0), // Adjust the padding as needed
+  child: CupertinoSearchTextField(
+    placeholder: 'Search for artists',
+    onChanged: (value) {
+      final cubit = context.read<DiscogsSearchCubit>();
+      if (value.isEmpty) {
+        cubit.clearSearchResults();
+      }
+    },
+    onSubmitted: (value) {
+      final cubit = context.read<DiscogsSearchCubit>();
+      cubit.searchArtists(value);
+    },
+  ),
+),
             BlocBuilder<DiscogsSearchCubit, DiscogsSearchState>(
               builder: (context, state) {
                 if (state.isLoading) {
@@ -59,34 +71,36 @@ class SearchView extends StatelessWidget {
                           title: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Row(
-                            children: [
-                              if (result.coverImage != null)
-                                ClipOval(
-                                child: Image.network(
-                                  result.coverImage!,
-                                  width: 50,
-                                  height: 50,
-                                  fit: BoxFit.cover,
+                              children: [
+                                if (result.coverImage != null)
+                                  ClipOval(
+                                    child: Image.network(
+                                      result.coverImage!,
+                                      width: 50,
+                                      height: 50,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  )
+                                else
+                                  const Icon(
+                                    CupertinoIcons.person,
+                                    size: 50,
                                   ),
-                                )
-                              else
-                                const Icon(
-                                  CupertinoIcons.person,
-                                  size: 50,
-                                ),
-                              const SizedBox(width: 10),
-                              Text(result.title),
-                            ],
-                          ),
+                                const SizedBox(width: 10),
+                                Text(result.title),
+                              ],
+                            ),
                           ),
                           //subtitle: Text(result.genre.join(', ')),
                           onTap: () async {
-                            final searchService = context.read<RecentSearchesService>();
+                            final searchService =
+                                context.read<RecentSearchesService>();
                             await searchService.addSearch(result.title);
                             if (context.mounted) {
                               Navigator.of(context).push(
                                 CupertinoPageRoute(
-                                  builder: (context) => ReleasesUi(artist: result),
+                                  builder: (context) =>
+                                      ReleasesUi(artist: result),
                                 ),
                               );
                             }

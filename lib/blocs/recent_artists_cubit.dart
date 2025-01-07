@@ -16,4 +16,13 @@ class RecentArtistsCubit extends Cubit<RecentArtistsState> {
       emit(RecentArtistsState(error: e.toString()));
     }
   }
+
+  Future<void> removeArtist(String artistName) async {
+    try {
+      await _searchesService.removeSearch(artistName);
+      await loadRecentArtists(); // Recharge la liste après suppression
+    } catch (e) {
+      emit(RecentArtistsState(error: e.toString()));
+    }
+  }
 }

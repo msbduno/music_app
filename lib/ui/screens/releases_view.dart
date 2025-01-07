@@ -31,24 +31,25 @@ class ReleasesView extends StatelessWidget {
       child: CustomScrollView(
         slivers: <Widget>[
           CupertinoSliverNavigationBar(
-            backgroundColor: CupertinoColors.activeBlue,
-            largeTitle: Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      artist.title,
-                      style: CupertinoTheme.of(context).textTheme.navTitleTextStyle.copyWith(
-                        fontSize: 30,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            largeTitle: Row(
+          children: [
+          if (artist.coverImage != null)
+      ClipOval(
+    child: Image.network(
+    artist.coverImage!,
+      width: 40,
+      height: 40,
+      fit: BoxFit.cover,
+    ),
+    ),
+    const SizedBox(width: 8), // Add some spacing between the image and the title
+    Text(artist.title),
+    ],
+          ),
+          ),
+          // add space
+          const SliverToBoxAdapter(
+            child: SizedBox(height: 16),
           ),
           BlocBuilder<DiscogsReleasesCubit, DiscogsReleasesState>(
             builder: (context, state) {
@@ -80,7 +81,9 @@ class ReleasesView extends StatelessWidget {
                         (context, index) {
                       final music = state.releases[index];
                       return CupertinoListTile(
+                        //add music.year.toString() to the title
                         title: Text(music.title),
+                        subtitle: Text(music.year.toString()),
                         trailing: const Icon(
                           CupertinoIcons.link_circle,
                           color: CupertinoColors.systemGrey,
