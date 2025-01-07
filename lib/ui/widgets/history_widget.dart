@@ -1,4 +1,3 @@
-// lib/ui/widgets/search_history_widget.dart
 import 'package:flutter/cupertino.dart';
 
 class SearchHistoryWidget extends StatelessWidget {

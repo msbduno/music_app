@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:music_app/ui/screens/links_screen.dart';
 import '../../models/discogs_result.dart';

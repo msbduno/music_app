@@ -1,17 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:music_app/blocs/discogs_search_cubit.dart';
 import 'package:music_app/repositories/discogs_repository.dart';
-import 'package:music_app/ui/screens/search_details_screen.dart';
+import 'package:music_app/ui/screens/releases_view.dart';
+import '../../service/recent_researh_service.dart';
 import '../../states/discogs_search_state.dart';
 
 class SearchUi extends StatelessWidget {
-  const SearchUi({super.key});
+  final RecentSearchesService searchesService;
+
+  const SearchUi({super.key, required this.searchesService});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => DiscogsSearchCubit(DiscogsRepository()),
+    return MultiProvider(
+      providers: [
+        Provider<RecentSearchesService>.value(value: searchesService),
+        BlocProvider(
+          create: (context) => DiscogsSearchCubit(DiscogsRepository()),
+        ),
+      ],
       child: const SearchView(),
     );
   }
@@ -49,12 +58,16 @@ class SearchView extends StatelessWidget {
                         return CupertinoListTile(
                           title: Text(result.title),
                           //subtitle: Text(result.genre.join(', ')),
-                          onTap: () {
-                            Navigator.of(context).push(
-                              CupertinoPageRoute(
-                                builder: (context) => SearchDetailsScreen(artist: result),
-                              ),
-                            );
+                          onTap: () async {
+                            final searchService = context.read<RecentSearchesService>();
+                            await searchService.addSearch(result.title);
+                            if (context.mounted) {
+                              Navigator.of(context).push(
+                                CupertinoPageRoute(
+                                  builder: (context) => ReleasesUi(artist: result),
+                                ),
+                              );
+                            }
                           },
                         );
                       },

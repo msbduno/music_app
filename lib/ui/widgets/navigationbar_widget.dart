@@ -2,8 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:music_app/ui/screens/home_screen.dart';
 import 'package:music_app/ui/screens/search_view.dart';
 
+import '../../service/recent_researh_service.dart';
+
 class NavigationBar extends StatelessWidget {
-  const NavigationBar({super.key});
+  final RecentSearchesService searchesService;
+
+  const NavigationBar({required this.searchesService, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +17,6 @@ class NavigationBar extends StatelessWidget {
         inactiveColor: CupertinoColors.systemGrey,
         iconSize: 27, // Taille des icônes
         height: 60, // Hauteur des éléments
-
-
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Padding(
@@ -36,20 +38,18 @@ class NavigationBar extends StatelessWidget {
         switch (index) {
           case 0:
             return CupertinoTabView(
-              builder: (BuildContext context) => HomeScreen(),
+              builder: (BuildContext context) => HomeUi(searchesService: searchesService),
             );
           case 1:
             return CupertinoTabView(
-              builder: (BuildContext context) => SearchUi(),
+              builder: (BuildContext context) => SearchUi( searchesService: searchesService),
             );
           default:
             return CupertinoTabView(
-              builder: (BuildContext context) => HomeScreen(),
+              builder: (BuildContext context) => HomeUi(searchesService: searchesService),
             );
         }
       },
     );
   }
-
 }
-

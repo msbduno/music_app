@@ -1,29 +1,37 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:music_app/blocs/search_cubit.dart';
-import 'package:music_app/repositories/spotify_repository.dart';
-import 'package:music_app/ui/screens/search_details_screen.dart';
+import 'package:music_app/repositories/discogs_repository.dart';
+import 'package:music_app/service/recent_researh_service.dart';
 import 'package:music_app/ui/screens/search_view.dart';
 import 'package:music_app/ui/widgets/navigationbar_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'core/theme.dart';
-import 'models/discogs_result.dart';
+import 'blocs/discogs_search_cubit.dart';
 
-void main() {
-  runApp(const MyApp());
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final prefs = await SharedPreferences.getInstance();
+  final _discogsSearchCubit = DiscogsSearchCubit(DiscogsRepository());
+  final searchesService = RecentSearchesService(prefs, _discogsSearchCubit);
+
+  runApp(MyApp(searchesService: searchesService));
 }
 
+
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final RecentSearchesService searchesService;
+
+  const MyApp({required this.searchesService, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CupertinoApp(
-          home: const NavigationBar(),
-          debugShowCheckedModeBanner: false,
-          routes: {
-            '/search': (context) => const SearchUi(),
-          }
+      home: NavigationBar(searchesService: searchesService),
+      debugShowCheckedModeBanner: false,
+        routes: {
+          '/search': (context) => SearchUi(searchesService: searchesService),
+        }
         );
   }
 }
