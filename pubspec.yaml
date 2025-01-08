@@ -40,6 +40,7 @@ dependencies:
   flutter_secure_storage: ^8.0.0
   flutter_bloc: ^8.0.0
   shared_preferences: ^2.0.13
+  video_player: ^2.2.19
 
 
   bloc: any

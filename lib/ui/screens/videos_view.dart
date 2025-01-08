@@ -4,7 +4,7 @@ import '../../blocs/discogs_videos_cubit.dart';
 import '../../repositories/discogs_repository.dart';
 import '../../states/discogs_videos_state.dart';
 import '../../models/discogs_artist_releases.dart';
-import '../../models/discogs_videos.dart';
+import '../widgets/video_player_widget.dart';
 
 class VideosUi extends StatelessWidget {
   final DiscogsArtistReleases release;
@@ -35,7 +35,6 @@ class VideosView extends StatelessWidget {
               children: [
                 Text(release.title),
                 const SizedBox(width: 8),
-                // Affichage de l'année
                 Text(
                   '(${release.year})',
                   style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
@@ -94,19 +93,7 @@ class VideosView extends StatelessWidget {
                               ),
                             ),
                           ),
-                          ...videoEntry.value.map((video) => CupertinoListTile(
-                            title: Text(video.title),
-                            subtitle: Text(video.description.isEmpty
-                                ? 'Duration: ${video.duration}s'
-                                : video.description),
-                            trailing: const Icon(
-                              CupertinoIcons.play_circle,
-                              color: CupertinoColors.systemGrey,
-                            ),
-                            onTap: () {
-                              // Implement video playing functionality
-                            },
-                          )),
+                          ...videoEntry.value.map((video) => VideoPlayerWidget(uri: video.uri)),
                         ],
                       );
                     },
@@ -121,3 +108,5 @@ class VideosView extends StatelessWidget {
     );
   }
 }
+
+

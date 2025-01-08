@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:music_app/repositories/discogs_repository.dart';
 import 'package:music_app/service/recent_researh_service.dart';
 import 'package:music_app/ui/screens/search_view.dart';
-import 'package:music_app/ui/widgets/navigationbar_widget.dart';
+import 'package:music_app/ui/widgets/navigation_bar_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 
