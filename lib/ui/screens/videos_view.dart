@@ -31,20 +31,25 @@ class VideosView extends StatelessWidget {
       child: CustomScrollView(
         slivers: <Widget>[
           CupertinoSliverNavigationBar(
-            largeTitle: Row(
-              children: [
-                Text(release.title),
-                const SizedBox(width: 8),
-                Text(
-                  '(${release.year})',
-                  style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-                    color: CupertinoColors.systemGrey,
-                    fontSize: 14,
-                  ),
-                ),
-              ],
-            ),
-          ),
+  largeTitle: Row(
+    children: [
+      Flexible(
+        child: Text(
+          release.title,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
+      const SizedBox(width: 8),
+      Text(
+        '(${release.year})',
+        style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+          color: CupertinoColors.systemGrey,
+          fontSize: 14,
+        ),
+      ),
+    ],
+  ),
+),
           const SliverToBoxAdapter(
             child: SizedBox(height: 16),
           ),
