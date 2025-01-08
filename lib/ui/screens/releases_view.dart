@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:music_app/repositories/discogs_repository.dart';
+import 'package:music_app/ui/screens/videos_view.dart';
 import '../../blocs/discogs_artist_cubit.dart';
 import '../../models/discogs_releases.dart';
 import '../../states/discogs_artist_state.dart';
-import 'links_screen.dart';
+
 
 class ReleasesUi extends StatelessWidget {
   final DiscogsReleases artist;
@@ -91,8 +92,9 @@ class ReleasesView extends StatelessWidget {
                         onTap: () {
                           Navigator.of(context).push(
                             CupertinoPageRoute(
-                              builder: (context) => LinksScreen(musicName: music.title),
+                              builder: (context) => VideosUi(release: music),
                             ),
+
                           );
                         },
                       );
