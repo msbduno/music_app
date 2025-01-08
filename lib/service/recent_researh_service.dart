@@ -9,7 +9,7 @@ class RecentSearchesService {
   final int _maxItems;
   final DiscogsSearchCubit _discogsSearchCubit;
 
-  RecentSearchesService(this._prefs, this._discogsSearchCubit, {int maxItems = 4})
+  RecentSearchesService(this._prefs, this._discogsSearchCubit, {int maxItems = 6})
       : _maxItems = maxItems;
 
   List<String> getRecentSearches() {

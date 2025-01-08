@@ -32,22 +32,27 @@ class ReleasesView extends StatelessWidget {
       child: CustomScrollView(
         slivers: <Widget>[
           CupertinoSliverNavigationBar(
-            largeTitle: Row(
-          children: [
-          if (artist.coverImage != null)
-      ClipOval(
-    child: Image.network(
-    artist.coverImage!,
-      width: 40,
-      height: 40,
-      fit: BoxFit.cover,
-    ),
-    ),
-    const SizedBox(width: 8), // Add some spacing between the image and the title
-    Text(artist.title),
+  largeTitle: Row(
+    children: [
+      if (artist.coverImage != null)
+        ClipOval(
+          child: Image.network(
+            artist.coverImage!,
+            width: 40,
+            height: 40,
+            fit: BoxFit.cover,
+          ),
+        ),
+      const SizedBox(width: 8), // Add some spacing between the image and the title
+      Flexible(
+        child: Text(
+          artist.title,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
     ],
-          ),
-          ),
+  ),
+),
           // add space
           const SliverToBoxAdapter(
             child: SizedBox(height: 16),
@@ -82,7 +87,6 @@ class ReleasesView extends StatelessWidget {
                         (context, index) {
                       final music = state.releases[index];
                       return CupertinoListTile(
-                        //add music.year.toString() to the title
                         title: Text(music.title),
                         subtitle: Text(music.year.toString()),
                         trailing: const Icon(
