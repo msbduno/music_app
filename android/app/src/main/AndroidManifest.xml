@@ -3,7 +3,6 @@
     <!-- Le reste de votre configuration -->
     <application
         android:label="music_app"
-        android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
