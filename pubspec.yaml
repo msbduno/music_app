@@ -40,8 +40,10 @@ dependencies:
   flutter_secure_storage: ^8.0.0
   flutter_bloc: ^8.0.0
   shared_preferences: ^2.0.13
-  video_player: ^2.2.19
 
+  youtube_player_iframe: ^5.2.1
+  flutter_localizations:
+      sdk: flutter
 
   bloc: any
 dev_dependencies:

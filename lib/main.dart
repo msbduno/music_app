@@ -2,44 +2,49 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:music_app/repositories/discogs_repository.dart';
 import 'package:music_app/service/recent_researh_service.dart';
-import 'package:music_app/ui/screens/search_view.dart';
 import 'package:music_app/ui/widgets/navigation_bar_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:provider/provider.dart';
-
 import 'blocs/discogs_search_cubit.dart';
 import 'blocs/recent_artists_cubit.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final prefs = await SharedPreferences.getInstance();
-  final _discogsSearchCubit = DiscogsSearchCubit(DiscogsRepository());
-  final searchesService = RecentSearchesService(prefs, _discogsSearchCubit);
+  final discogsRepository = DiscogsRepository();
+  final discogsSearchCubit = DiscogsSearchCubit(discogsRepository);
+  final searchesService = RecentSearchesService(prefs, discogsSearchCubit);
+  final recentArtistsCubit = RecentArtistsCubit(searchesService);
 
-  runApp(MyApp(searchesService: searchesService));
+  runApp(MyApp(
+    searchesService: searchesService,
+    recentArtistsCubit: recentArtistsCubit,
+  ));
 }
 
 class MyApp extends StatelessWidget {
   final RecentSearchesService searchesService;
+  final RecentArtistsCubit recentArtistsCubit;
 
-  const MyApp({required this.searchesService, Key? key}) : super(key: key);
+  const MyApp({
+    required this.searchesService,
+    required this.recentArtistsCubit,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
+    return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => RecentArtistsCubit(searchesService),
-        ),
-        // Add other providers here if needed
+        BlocProvider<RecentArtistsCubit>.value(value: recentArtistsCubit),
       ],
       child: CupertinoApp(
-        home: NavigationBar(searchesService: searchesService),
+        home: NavigationBar(
+          searchesService: searchesService,
+          recentArtistsCubit: recentArtistsCubit,
+        ),
         debugShowCheckedModeBanner: false,
-        routes: {
-          '/search': (context) => SearchUi(searchesService: searchesService),
-        },
       ),
     );
   }

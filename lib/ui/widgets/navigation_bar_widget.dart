@@ -8,8 +8,13 @@ import '../screens/search_view.dart';
 
 class NavigationBar extends StatelessWidget {
   final RecentSearchesService searchesService;
+  final RecentArtistsCubit recentArtistsCubit;
 
-  const NavigationBar({required this.searchesService, super.key});
+  const NavigationBar({
+    required this.searchesService,
+    required this.recentArtistsCubit,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -37,33 +42,21 @@ class NavigationBar extends StatelessWidget {
         ],
         onTap: (index) {
           if (index == 0) {
-            // Recharge les artistes récents quand on retourne à l'accueil
-            final cubit = context.read<RecentArtistsCubit>();
-            cubit.loadRecentArtists();
+            recentArtistsCubit.loadRecentArtists();
           }
         },
       ),
       tabBuilder: (BuildContext context, int index) {
-        switch (index) {
-          case 0:
-            return CupertinoTabView(
-              builder: (BuildContext context) => BlocProvider(
-                create: (context) => RecentArtistsCubit(searchesService)..loadRecentArtists(),
-                child: const HomeScreen(),
-              ),
+        return CupertinoTabView(
+          builder: (BuildContext context) {
+            return BlocProvider.value(
+              value: recentArtistsCubit,
+              child: index == 0
+                  ? const HomeScreen()
+                  : SearchUi(searchesService: searchesService),
             );
-          case 1:
-            return CupertinoTabView(
-              builder: (BuildContext context) => SearchUi(searchesService: searchesService),
-            );
-          default:
-            return CupertinoTabView(
-              builder: (BuildContext context) => BlocProvider(
-                create: (context) => RecentArtistsCubit(searchesService)..loadRecentArtists(),
-                child: const HomeScreen(),
-              ),
-            );
-        }
+          },
+        );
       },
     );
   }

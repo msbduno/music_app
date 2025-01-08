@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:video_player/video_player.dart';
+import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class VideoPlayerWidget extends StatefulWidget {
   final String uri;
@@ -11,43 +11,38 @@ class VideoPlayerWidget extends StatefulWidget {
 }
 
 class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
-  late VideoPlayerController _controller;
+  late YoutubePlayerController _controller;
 
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.networkUrl(Uri.parse(widget.uri))
-      ..initialize().then((_) {
-        setState(() {});
-      });
+    final videoId = YoutubePlayerController.convertUrlToId(widget.uri);
+    _controller = YoutubePlayerController.fromVideoId(
+      videoId: videoId ?? '',
+      params: const YoutubePlayerParams(
+        showControls: true,
+        showFullscreenButton: true,
+        mute: false,
+      ),
+    );
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        if (_controller.value.isInitialized)
-          AspectRatio(
-            aspectRatio: _controller.value.aspectRatio,
-            child: VideoPlayer(_controller),
-          ),
-        CupertinoButton(
-          onPressed: () {
-            setState(() {
-              _controller.value.isPlaying ? _controller.pause() : _controller.play();
-            });
-          },
-          child: Icon(
-            _controller.value.isPlaying ? CupertinoIcons.pause : CupertinoIcons.play_arrow,
-          ),
-        ),
-      ],
+    return Container(
+      height: 200,
+      width: 500,
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: YoutubePlayer(
+        controller: _controller,
+        aspectRatio: 16 / 9,
+      ),
     );
   }
 }

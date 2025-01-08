@@ -26,6 +26,9 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             BlocBuilder<RecentArtistsCubit, RecentArtistsState>(
+              buildWhen: (previous, current) =>
+              previous.artists != current.artists ||
+                  previous.isLoading != current.isLoading,
               builder: (context, state) {
                 if (state.isLoading) {
                   return const Center(child: CupertinoActivityIndicator());

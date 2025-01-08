@@ -26,6 +26,7 @@ class SearchUi extends StatelessWidget {
   }
 }
 
+
 class SearchView extends StatelessWidget {
   const SearchView({super.key});
 
@@ -40,21 +41,21 @@ class SearchView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-  padding: const EdgeInsets.all(16.0), // Adjust the padding as needed
-  child: CupertinoSearchTextField(
-    placeholder: 'Search for artists',
-    onChanged: (value) {
-      final cubit = context.read<DiscogsSearchCubit>();
-      if (value.isEmpty) {
-        cubit.clearSearchResults();
-      }
-    },
-    onSubmitted: (value) {
-      final cubit = context.read<DiscogsSearchCubit>();
-      cubit.searchArtists(value);
-    },
-  ),
-),
+              padding: const EdgeInsets.all(16.0), // Adjust the padding as needed
+              child: CupertinoSearchTextField(
+                placeholder: 'Search for artists',
+                onChanged: (value) {
+                  final cubit = context.read<DiscogsSearchCubit>();
+                  if (value.isEmpty) {
+                    cubit.clearSearchResults();
+                  }
+                },
+                onSubmitted: (value) {
+                  final cubit = context.read<DiscogsSearchCubit>();
+                  cubit.searchArtists(value);
+                },
+              ),
+            ),
             BlocBuilder<DiscogsSearchCubit, DiscogsSearchState>(
               builder: (context, state) {
                 if (state.isLoading) {
@@ -94,9 +95,10 @@ class SearchView extends StatelessWidget {
                           //subtitle: Text(result.genre.join(', ')),
                           onTap: () async {
                             final searchService =
-                                context.read<RecentSearchesService>();
+                            context.read<RecentSearchesService>();
                             await searchService.addSearch(result.title);
                             if (context.mounted) {
+
                               Navigator.of(context).push(
                                 CupertinoPageRoute(
                                   builder: (context) =>
