@@ -1,4 +1,4 @@
-#music_app
+# music_app
 
 ## Description
 Une application Flutter pour découvrir et explorer la musique en utilisant l'API Discogs.
