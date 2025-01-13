@@ -5,6 +5,10 @@
 ## Description
 Une application Flutter pour découvrir et explorer la musique en utilisant l'API Discogs.
 
+## Visuels 
+![IMG_2708](https://github.com/user-attachments/assets/79893597-9d94-459f-b6c0-0b84694175af)
+
+
 ## Fonctionnalités
 - Recherche d'artistes en temps réel
 - Interface utilisateur iOS native (style Cupertino)
