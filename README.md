@@ -1,83 +1,80 @@
-# music_app
-
-# Music App
 
 ## Description
-A Flutter application for discovering and exploring music using the Discogs API.
+Une application Flutter pour découvrir et explorer la musique en utilisant l'API Discogs.
 
-## Features
-- Real-time artist search
-- iOS native UI (Cupertino style)
-- Artist releases exploration
-- Video playback for releases
-- Recent search history
-- Artist cover image display
+## Fonctionnalités
+- Recherche d'artistes en temps réel
+- Interface utilisateur iOS native (style Cupertino)
+- Exploration des sorties d'artistes
+- Lecture de vidéos pour les sorties
+- Historique des recherches récentes
+- Affichage des images de couverture des artistes
 
-## Tech Stack
+## Stack Technique
 - Flutter
-- Bloc/Cubit for state management
-- Discogs API
+- Bloc/Cubit pour la gestion d'état
+- API Discogs
 - SharedPreferences
-- Provider for dependency injection
+- Provider pour l'injection de dépendances
 
-## Development Environment
-- Flutter: 3.27.1 (Channel stable)
-- Xcode: 16.1
-- Android SDK: 35.0.0
-- Android Studio: 2024.2
-- VS Code: 1.96.2
-- IntelliJ IDEA Ultimate: 2024.3.1.1
-- OS: macOS 14.5 (darwin-arm64)
+## Environnement de Développement
+- Flutter : 3.27.1 (Canal stable)
+- Xcode : 16.1
+- Android SDK : 35.0.0
+- Android Studio : 2024.2
+- VS Code : 1.96.2
+- IntelliJ IDEA Ultimate : 2024.3.1.1
+- OS : macOS 14.5 (darwin-arm64)
 
-## Prerequisites
+## Prérequis
 - Flutter SDK (3.27.1+)
-- Xcode 16.1+ for iOS development
-- Android Studio or VS Code with Flutter/Dart extensions
-- Discogs API key
+- Xcode 16.1+ pour le développement iOS
+- Android Studio ou VS Code avec les extensions Flutter/Dart
+- Clé API Discogs
 
 ## Installation
 ```bash
-# Clone the repository
+# Cloner le dépôt
 git clone https://github.com/msbduno/music_app.git
 cd music_app
 
-# Install dependencies
+# Installer les dépendances
 flutter pub get
 
-# Run the app
+# Lancer l'application
 flutter run
 ```
 
-## Project Structure
+## Structure du Projet
 ```
 music_app/
 ├── lib/
-│   ├── blocs/       # Cubits for state management
-│   ├── models/      # Data models
-│   ├── repositories/# API calls
-│   ├── services/    # Business services
-│   ├── states/      # Cubit states
+│   ├── blocs/       # Cubits pour la gestion d'état
+│   ├── models/      # Modèles de données
+│   ├── repositories/# Appels API
+│   ├── services/    # Services métier
+│   ├── states/      # États des Cubits
 │   └── ui/
-│       ├── screens/ # Main screens
-│       └── widgets/ # Reusable components
+│       ├── screens/ # Écrans principaux
+│       └── widgets/ # Composants réutilisables
 ```
 
-## Main Screens
-- `HomeScreen`: Recent searches display
-- `SearchView`: Artist search interface
-- `ReleasesView`: Artist releases list
-- `VideosView`: Video player for releases
+## Écrans Principaux
+- `HomeScreen` : Affichage des recherches récentes
+- `SearchView` : Interface de recherche d'artistes
+- `ReleasesView` : Liste des sorties d'artistes
+- `VideosView` : Lecteur vidéo pour les sorties
 
 
-## Flutter Doctor Summary
+## Résumé Flutter Doctor
 ```
-[✓] Flutter (Channel stable, 3.27.1, on macOS 14.5 23F79 darwin-arm64, locale fr-FR)
-[✓] Android toolchain - develop for Android devices (Android SDK version 35.0.0)
-[✓] Xcode - develop for iOS and macOS (Xcode 16.1)
-[✗] Chrome - develop for the web
+[✓] Flutter (Canal stable, 3.27.1, sur macOS 14.5 23F79 darwin-arm64, locale fr-FR)
+[✓] Chaîne d'outils Android - développement pour appareils Android (version SDK Android 35.0.0)
+[✓] Xcode - développement pour iOS et macOS (Xcode 16.1)
+[✗] Chrome - développement pour le web
 [✓] Android Studio (version 2024.2)
 [✓] IntelliJ IDEA Ultimate Edition (version 2024.3.1.1)
 [✓] VS Code (version 1.96.2)
-[✓] Connected device (3 available)
-[✓] Network resources
+[✓] Appareil connecté (3 disponibles)
+[✓] Ressources réseau
 ```
