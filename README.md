@@ -1,4 +1,6 @@
-# music_app
+#  Projet : music_app
+
+## Mathis GUILLOU & Mathis BOSSARD
 
 ## Description
 Une application Flutter pour découvrir et explorer la musique en utilisant l'API Discogs.
